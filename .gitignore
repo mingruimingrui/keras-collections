@@ -108,4 +108,4 @@ logs
 snapshot
 
 # Debug files
-debug*
+*debug*
