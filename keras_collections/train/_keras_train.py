@@ -33,18 +33,6 @@ def save_dict(dict_obj, file_path):
         json.dump(dict_obj, f, indent=4)
 
 
-def config_session():
-    session_config = tf.ConfigProto()
-
-    # Allow growth
-    session_config.gpu_options.allow_growth = True
-    logging.info('Graph set to allow growth')
-
-    # Set config
-    current_session = tf.Session(config=session_config)
-    keras.backend.tensorflow_backend.set_session(current_session)
-
-
 def log_training_args(args):
     if not args['log_dir']:
         logging.warn('logging directory not provided, no training byproducts will be created')

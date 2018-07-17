@@ -3,7 +3,6 @@
 import logging
 
 from ._keras_train import (
-    config_session,
     log_training_args,
     log_sample_input,
     create_callback,
@@ -64,7 +63,6 @@ def train_model(
 
     logging.info('==================== Initializing Training Job ====================')
 
-    config_session()
     log_training_args(args=locals())
     batch_size = log_sample_input(generator, log_dir)
     callbacks = create_callback(
