@@ -31,7 +31,7 @@ def compile_retinanet(
     optimizer=None
 ):
     if optimizer is None:
-        keras.optimizers.adam(lr=1e-5, clipnorm=0.001)
+        optimizer=keras.optimizers.adam(lr=1e-5, clipnorm=0.001)
 
     training_model.compile(
         loss={
