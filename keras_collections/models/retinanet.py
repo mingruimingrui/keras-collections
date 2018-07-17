@@ -23,6 +23,25 @@ from ._load_backbone import (
 )
 
 
+def compile_retinanet(
+    training_model,
+    huber_sigma=3.0,
+    focal_alpha=0.25,
+    focal_gamma=2.0,
+    optimizer=None
+):
+    if optimizer is None:
+        keras.optimizers.adam(lr=1e-5, clipnorm=0.001)
+
+    training_model.compile(
+        loss={
+            'regression'    : losses.make_detection_huber_loss(sigma=huber_sigma),
+            'classification': losses.make_detection_focal_loss(alpha=focal_alpha, gamma=focal_gamma)
+        },
+        optimizer=optimizer
+    )
+
+
 def RetinaNetLoad(filepath, backbone='resnet50'):
     """ Loads a retinanet model from a file
 
@@ -47,7 +66,7 @@ def RetinaNetLoad(filepath, backbone='resnet50'):
     return keras.models.load_model(filepath, custom_objects=custom_objects)
 
 
-def RetinaNetTrain(**kwargs):
+def RetinaNetTrain(num_classes, **kwargs):
     """ Construct a RetinaNet model for training
 
     Args
@@ -58,6 +77,7 @@ def RetinaNetTrain(**kwargs):
             - Shapes would be [(batch_size, num_anchors, 4), (batch_size, num_anchors, num_classes)]
         config         : The network configs (used to convert into a prediction model)
     """
+    kwargs['num_classes'] = num_classes
     config = make_config(**kwargs)
 
     # Make all submodels
