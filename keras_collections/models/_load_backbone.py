@@ -4,7 +4,7 @@
 def load_backbone(backbone='resnet50', freeze_backbone=False):
     if 'resnet' in backbone:
         from ._resnet_backbone import load_resnet_backbone as _load_backbone
-    if 'mobilenet' in backbone:
+    elif 'mobilenet' in backbone:
         from ._mobilenet_backbone import load_mobilenet_backbone as _load_backbone
     else:
         raise Exception('Backbone name {} has not been implemented'.format(backbone))
@@ -15,15 +15,18 @@ def load_backbone(backbone='resnet50', freeze_backbone=False):
 def load_backbone_preprocessing(backbone='resnet50'):
     if 'resnet' in backbone:
         from ._resnet_backbone import PREPROCESSING_LAYER as preprocessing_layer
-    if 'mobilenet' in backbone:
+    elif 'mobilenet' in backbone:
         from ._mobilenet_backbone import PREPROCESSING_LAYER as preprocessing_layer
+    else:
+        raise Exception('Backbone name {} has not been implemented'.format(backbone))
+
     return preprocessing_layer()
 
 
 def load_backbone_custom_objects(backbone='resnet50'):
     if 'resnet' in backbone:
         from ._resnet_backbone import CUSTOM_OBJECTS as custom_objects
-    if 'mobilenet' in backbone:
+    elif 'mobilenet' in backbone:
         from ._mobilenet_backbone import CUSTOM_OBJECTS as custom_objects
     else:
         raise Exception('Backbone name {} has not been implemented'.format(backbone))
