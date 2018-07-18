@@ -45,7 +45,8 @@ def _get_annotations_and_detections(
     max_detections=100,
     max_images=None,
     max_plots=5,
-    save_dir=None
+    save_dir=None,
+    label_to_name=None
 ):
     """ Get the annotations and detections from the model using the generator.
 
@@ -125,7 +126,7 @@ def _get_annotations_and_detections(
             image = image.copy()
 
             draw_detections(image, image_boxes, image_scores, image_labels,
-                label_to_name=generator.label_to_name, score_threshold=score_threshold)
+                label_to_name=label_to_name, score_threshold=score_threshold)
 
             save_path = os.path.join(save_dir, 'detections_{}.png'.format(image_index))
             Image.fromarray(image).save(save_path)
@@ -146,7 +147,8 @@ def evaluate_detection(
     max_detections=100,
     max_images=None,
     max_plots=5,
-    save_dir=None
+    save_dir=None,
+    label_to_name=None
 ):
     """ Evaluate a detection model on a dataset
     At present evaluation is working only at batch sizes of 1
@@ -175,7 +177,8 @@ def evaluate_detection(
         max_detections=max_detections,
         max_images=max_images,
         max_plots=max_plots,
-        save_dir=save_dir
+        save_dir=save_dir,
+        label_to_name=label_to_name
     )
 
     # Record number of images to be used in evaluation
